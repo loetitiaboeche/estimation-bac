@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur Bac Général 2025-2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .main-content {
+            padding: 30px;
+            display: none;
+        }
+
+        .main-content.visible {
+            display: block;
+        }
+
+        /* Modal pour email */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .modal-header p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            color: #666;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .privacy-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85em;
+            color: #999;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 20px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: #e0e0e0;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin: 15px 0 10px 0;
+            font-size: 1.1em;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #f8f9ff;
+        }
+
+        .upload-area.dragging {
+            border-color: #764ba2;
+            background: #e8ebff;
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .upload-hint {
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .file-list {
+            margin-top: 20px;
+        }
+
+        .file-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-icon {
+            font-size: 1.5em;
+        }
+
+        .file-name {
+            font-weight: 500;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 5px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .btn-delete {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #ff5252;
+        }
+
+        .grade-input {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .grade-input label {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .coef-badge {
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        input[type="number"].auto-filled {
+            border-color: #4CAF50;
+            background: #f0fff4;
+        }
+
+        .results {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .results h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-label {
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .mention-badge {
+            background: white;
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1em;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .mention-badge.tb {
+            background: #FFD700;
+            color: #333;
+        }
+
+        .mention-badge.b {
+            background: #C0C0C0;
+            color: #333;
+        }
+
+        .mention-badge.ab {
+            background: #CD7F32;
+            color: white;
+        }
+
+        .mention-badge.rattrapage {
+            background: #FFA500;
+            color: white;
+        }
+
+        .mention-badge.refuse {
+            background: #FF6B6B;
+            color: white;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px 5px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button.secondary {
+            background: #6c757d;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .grade-input {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab {
+                width: 100%;
+            }
+
+            .result-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        .extraction-preview {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .extraction-preview h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .extraction-item {
+            padding: 8px;
+            background: #f8f9ff;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal Email -->
+    <div id="emailModal" class="modal" style="display: block;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎓 Bienvenue !</h2>
+                <p>Pour accéder au calculateur de baccalauréat, veuillez entrer votre adresse email.</p>
+                <p style="margin-top: 10px; font-size: 0.9em;">Cet outil est <strong>100% gratuit</strong> et votre email ne sera utilisé que pour vous tenir informé des mises à jour.</p>
+            </div>
+            
+            <form id="emailForm" onsubmit="submitEmail(event)">
+                <div class="form-group">
+                    <label for="userEmail">Adresse email *</label>
+                    <input type="email" id="userEmail" required placeholder="votre@email.com">
+                    <span class="error-message" id="emailError">Veuillez entrer une adresse email valide</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="userName">Prénom (optionnel)</label>
+                    <input type="text" id="userName" placeholder="Votre prénom">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="acceptTerms" required>
+                    <label for="acceptTerms">J'accepte de recevoir des informations sur les mises à jour de l'application</label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    🚀 Accéder au calculateur
+                </button>
+            </form>
+
+            <div class="privacy-note">
+                🔒 Vos données sont sécurisées et ne seront jamais partagées avec des tiers.
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>📚 Calculateur Bac Général</h1>
+            <p class="subtitle">Estimez votre résultat au baccalauréat 2025-2026</p>
+        </header>
+
+        <div class="main-content" id="mainContent">
+            <div class="info-box">
+                <p><strong>💡 Comment ça marche ?</strong></p>
+                <p><strong>Méthode 1 (Recommandée) :</strong> Téléversez vos bulletins de notes en PDF (1ère et/ou Terminale). L'application extraira automatiquement vos notes et estimera votre résultat au bac.</p>
+                <p><strong>Méthode 2 :</strong> Saisissez manuellement vos notes actuelles pour une estimation personnalisée.</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('upload')">📤 Import Bulletins</button>
+                <button class="tab" onclick="showTab('saisie')">✏️ Saisie Manuelle</button>
+                <button class="tab" onclick="showTab('simulation')">🎯 Simulation</button>
+                <button class="tab" onclick="showTab('info')">ℹ️ Informations</button>
+            </div>
+
+            <!-- Onglet Upload de Bulletins -->
+            <div id="upload" class="tab-content active">
+                <div class="section">
+                    <h2>📤 Téléversez vos bulletins de notes</h2>
+                    
+                    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-icon">📄</div>
+                        <div class="upload-text">Cliquez ou glissez-déposez vos bulletins PDF ici</div>
+                        <div class="upload-hint">Vous pouvez ajouter plusieurs bulletins (1ère et Terminale)</div>
+                    </div>
+                    
+                    <input type="file" id="fileInput" accept=".pdf" multiple>
+                    
+                    <div id="fileList" class="file-list"></div>
+                    
+                    <div id="processingStatus"></div>
+                    
+                    <div id="extractedData"></div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="button" id="processBtn" onclick="processBulletins()" disabled>
+                            🔍 Analyser les bulletins
+                        </button>
+                        <button class="button" id="calculateFromPDFBtn" onclick="calculerFromPDF()" style="display: none;">
+                            🧮 Calculer l'estimation
+                        </button>
+                    </div>
+                </div>
+
+                <div id="pdfResults"></div>
+            </div>
+
+            <!-- Onglet Saisie Manuelle -->
+            <div id="saisie" class="tab-content">
+                <div class="section">
+                    <h2>📊 Contrôle Continu (40%)</h2>
+                    
+                    <h3>Première</h3>
+                    <div class="notes-grid">
+                        <div class="grade-input">
+                            <label>Spécialité abandonnée <span class="coef-badge">×8</span></label>
+                            <input type="number" id="spe_abandon" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Langue Vivante A <span class="coef-badge">×3</span></label>
+                            <input type="number" id="lva_1" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Langue Vivante B <span class="coef-badge">×3</span></label>
+                            <input type="number" id="lvb_1" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Histoire-Géo <span class="coef-badge">×3</span></label>
+                            <input type="number" id="hg_1" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Ens. Scientifique <span class="coef-badge">×3</span></label>
+                            <input type="number" id="es_1" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>EMC <span class="coef-badge">×1</span></label>
+                            <input type="number" id="emc_1" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                    </div>
+
+                    <h3>Terminale</h3>
+                    <div class="notes-grid">
+                        <div class="grade-input">
+                            <label>Langue Vivante A <span class="coef-badge">×3</span></label>
+                            <input type="number" id="lva_t" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Langue Vivante B <span class="coef-badge">×3</span></label>
+                            <input type="number" id="lvb_t" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Histoire-Géo <span class="coef-badge">×3</span></label>
+                            <input type="number" id="hg_t" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Ens. Scientifique <span class="coef-badge">×3</span></label>
+                            <input type="number" id="es_t" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>EPS <span class="coef-badge">×6</span></label>
+                            <input type="number" id="eps" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>EMC <span class="coef-badge">×1</span></label>
+                            <input type="number" id="emc_t" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📝 Épreuves Terminales (60%)</h2>
+                    
+                    <h3>Épreuves de Première</h3>
+                    <div class="notes-grid">
+                        <div class="grade-input">
+                            <label>Français écrit <span class="coef-badge">×5</span></label>
+                            <input type="number" id="fr_ecrit" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Français oral <span class="coef-badge">×5</span></label>
+                            <input type="number" id="fr_oral" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                    </div>
+
+                    <h3>Épreuves de Terminale</h3>
+                    <div class="notes-grid">
+                        <div class="grade-input">
+                            <label>Philosophie <span class="coef-badge">×8</span></label>
+                            <input type="number" id="philo" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Spécialité 1 <span class="coef-badge">×16</span></label>
+                            <input type="number" id="spe1" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Spécialité 2 <span class="coef-badge">×16</span></label>
+                            <input type="number" id="spe2" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                        
+                        <div class="grade-input">
+                            <label>Grand oral <span class="coef-badge">×10</span></label>
+                            <input type="number" id="grand_oral" min="0" max="20" step="0.1" placeholder="0-20">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button class="button" onclick="calculer()">🧮 Calculer mon résultat</button>
+                    <button class="button secondary" onclick="reset()">🔄 Réinitialiser</button>
+                </div>
+
+                <div id="results"></div>
+            </div>
+
+            <!-- Onglet Simulation -->
+            <div id="simulation" class="tab-content">
+                <div class="section">
+                    <h2>🎯 Simulez vos notes espérées</h2>
+                    <p style="margin-bottom: 20px;">Modifiez vos notes pour voir comment elles impacteraient votre résultat final.</p>
+                    
+                    <div id="simulation-content">
+                        <p style="text-align: center; color: #999;">Veuillez d'abord calculer une estimation (via bulletins ou saisie manuelle).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onglet Informations -->
+            <div id="info" class="tab-content">
+                <div class="section">
+                    <h2>📖 Comment fonctionne le baccalauréat général ?</h2>
+                    
+                    <h3>Répartition des épreuves</h3>
+                    <p><strong>Contrôle continu (40%)</strong> : Moyennes des bulletins de 1ère et Terminale</p>
+                    <p><strong>Épreuves terminales (60%)</strong> : Épreuves de français, philosophie, spécialités et grand oral</p>
+                    
+                    <h3>Les mentions</h3>
+                    <ul style="line-height: 2;">
+                        <li><strong>Assez Bien (AB)</strong> : moyenne ≥ 12 et &lt; 14</li>
+                        <li><strong>Bien (B)</strong> : moyenne ≥ 14 et &lt; 16</li>
+                        <li><strong>Très Bien (TB)</strong> : moyenne ≥ 16 et &lt; 18</li>
+                        <li><strong>Très Bien avec Félicitations</strong> : moyenne ≥ 18</li>
+                    </ul>
+
+                    <h3>Le rattrapage (second groupe)</h3>
+                    <p>Accessible si votre moyenne est entre 8 et 10.</p>
+                    <p>Vous passez 2 épreuves orales au choix parmi les matières à épreuves terminales écrites.</p>
+                    <p><strong>Important :</strong> Pas de mention possible après le rattrapage.</p>
+
+                    <h3>Comment fonctionne l'estimation par bulletins ?</h3>
+                    <p>L'application extrait vos notes actuelles et fait une projection intelligente :</p>
+                    <ul style="line-height: 1.8; margin-top: 10px;">
+                        <li><strong>Pour le contrôle continu :</strong> utilise vos moyennes réelles des bulletins</li>
+                        <li><strong>Pour les épreuves terminales :</strong> estime vos résultats futurs en se basant sur vos moyennes actuelles dans les matières correspondantes</li>
+                        <li><strong>Exemple :</strong> Si vous avez 14 de moyenne en philo dans vos bulletins, l'estimation projette 14 à l'épreuve de philo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- EmailJS pour l'envoi d'emails -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Configuration de PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // ===== GESTION DE L'EMAIL =====
+        function submitEmail(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('userEmail').value;
+            const name = document.getElementById('userName').value;
+            const acceptTerms = document.getElementById('acceptTerms').checked;
+
+            if (!acceptTerms) {
+                alert('Veuillez accepter les conditions pour continuer');
+                return;
+            }
+
+            // Envoi des données
+            sendEmailData(email, name);
+
+            // Masquer le modal et afficher l'application
+            document.getElementById('emailModal').style.display = 'none';
+            document.getElementById('mainContent').classList.add('visible');
+
+            // Sauvegarder dans localStorage pour ne pas redemander
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userName', name);
+            localStorage.setItem('accessGranted', 'true');
+            localStorage.setItem('accessDate', new Date().toISOString());
+        }
+
+        function sendEmailData(email, name) {
+            // ===== CONFIGURATION EMAILJS =====
+            // Remplacez ces valeurs par les vôtres depuis https://www.emailjs.com
+            const serviceID = 'VOTRE_SERVICE_ID';      // Ex: 'service_abc123'
+            const templateID = 'VOTRE_TEMPLATE_ID';    // Ex: 'template_xyz789'
+            const publicKey = 'VOTRE_PUBLIC_KEY';      // Ex: 'user_AbC123XyZ'
+
+            // Initialiser EmailJS
+            if (typeof emailjs !== 'undefined' && serviceID !== 'VOTRE_SERVICE_ID') {
+                emailjs.init(publicKey);
+                
+                const templateParams = {
+                    user_email: email,
+                    user_name: name || 'Non renseigné',
+                    submission_date: new Date().toLocaleDateString('fr-FR'),
+                    submission_time: new Date().toLocaleTimeString('fr-FR'),
+                    source: 'estimation-bac.fr'
+                };
+
+                emailjs.send(serviceID, templateID, templateParams)
+                    .then(() => {
+                        console.log('✅ Email envoyé avec succès !');
+                    })
+                    .catch((error) => {
+                        console.error('❌ Erreur envoi email:', error);
+                    });
+            } else if (serviceID === 'VOTRE_SERVICE_ID') {
+                console.warn('⚠️ EmailJS non configuré. Suivez le guide GUIDE-GITHUB-EMAILJS.md');
+            }
+
+            // Log local pour développement
+            console.log('📧 Inscription enregistrée:', { 
+                email, 
+                name, 
+                date: new Date().toLocaleString('fr-FR') 
+            });
+        }
+
+        // Vérifier si l'utilisateur a déjà donné son email
+        window.addEventListener('DOMContentLoaded', () => {
+            const accessGranted = localStorage.getItem('accessGranted');
+            if (accessGranted === 'true') {
+                document.getElementById('emailModal').style.display = 'none';
+                document.getElementById('mainContent').classList.add('visible');
+            }
+        });
+
+        // ===== RESTE DU CODE =====
+
+        let uploadedFiles = [];
+        let extractedGrades = {};
+
+        // Gestion de l'upload
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragging');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragging');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragging');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            for (let file of files) {
+                if (file.type === 'application/pdf') {
+                    uploadedFiles.push(file);
+                }
+            }
+            displayFileList();
+            document.getElementById('processBtn').disabled = uploadedFiles.length === 0;
+        }
+
+        function displayFileList() {
+            const fileListDiv = document.getElementById('fileList');
+            
+            if (uploadedFiles.length === 0) {
+                fileListDiv.innerHTML = '';
+                return;
+            }
+
+            let html = '<h3 style="margin-bottom: 10px;">📋 Fichiers ajoutés :</h3>';
+            uploadedFiles.forEach((file, index) => {
+                html += `
+                    <div class="file-item">
+                        <div class="file-info">
+                            <span class="file-icon">📄</span>
+                            <span class="file-name">${file.name}</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="btn-small btn-delete" onclick="removeFile(${index})">Supprimer</button>
+                        </div>
+                    </div>
+                `;
+            });
+            fileListDiv.innerHTML = html;
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            displayFileList();
+            document.getElementById('processBtn').disabled = uploadedFiles.length === 0;
+        }
+
+        async function processBulletins() {
+            const statusDiv = document.getElementById('processingStatus');
+            statusDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Analyse des bulletins en cours...</p>
+                </div>
+            `;
+
+            extractedGrades = {
+                premiere: {},
+                terminale: {},
+                epreuves: {}
+            };
+
+            try {
+                for (let file of uploadedFiles) {
+                    await extractFromPDF(file);
+                }
+                
+                statusDiv.innerHTML = `
+                    <div class="success-box">
+                        <p><strong>✅ Extraction terminée !</strong></p>
+                        <p>Les notes ont été extraites. Vérifiez et ajustez si nécessaire avant de calculer.</p>
+                    </div>
+                `;
+                
+                displayExtractedData();
+                document.getElementById('calculateFromPDFBtn').style.display = 'inline-block';
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="warning-box">
+                        <p><strong>⚠️ Erreur lors de l'extraction</strong></p>
+                        <p>${error.message}</p>
+                        <p>Vous pouvez saisir vos notes manuellement dans l'onglet "Saisie Manuelle".</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function extractFromPDF(file) {
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            
+            let fullText = '';
+            
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                const pageText = textContent.items.map(item => item.str).join(' ');
+                fullText += pageText + '\n';
+            }
+            
+            // Analyse intelligente du texte
+            analyzeText(fullText);
+        }
+
+        function analyzeText(text) {
+            // Normalisation du texte
+            const normalizedText = text.toLowerCase();
+            
+            // Détection des matières et notes
+            const patterns = {
+                // Contrôle continu Première
+                'lva_1': /(?:anglais|langue vivante a|lva|lv1)[^\d]*(1[0-9]|[0-9])[\.,]?([0-9]{1,2})?/i,
+                'lvb_1': /(?:espagnol|allemand|italien|langue vivante b|lvb|lv2)[^\d]*(1[0-9]|[0-9])[\.,]?([0-9]{1,2})?/i,
+                'hg_1': /(?:histoire|géographie|hist.*géo|hg)[^\d]*(1[0-9]|[0-9])[\.,]?([0-9]{1,2})?/i,
+                'es_1': /(?:enseignement scientifique|ens.*scient|sciences)[^\d]*(1[0-9]|[0-9])[\.,]?([0-9]{1,2})?/i,
+                'emc_1': /(?:emc|enseignement moral|civique)[^\d]*(1[0-9]|[0-9])[\.,]?([0-9]{1,2})?/i,
+                // Spécialités
+                'spe_abandon': /(?:spécialité|spe)[^\d]*(1[0-9]|[0-9])[\.,]?([0-9]{1,2})?/i,
+                'spe1': /(?:mathématiques|physique|svt|ses|hggsp|hlp|llcer)[^\d]*(1[0-9]|[0-9])[\.,]?([0-9]{1,2})?/i,
+                'eps': /(?:eps|éducation physique|sport)[^\d]*(1[0-9]|[0-9])[\.,]?([0-9]{1,2})?/i,
+            };
+
+            // Extraction des notes avec matching intelligent
+            for (const [key, pattern] of Object.entries(patterns)) {
+                const matches = text.match(pattern);
+                if (matches && matches[1]) {
+                    let note = parseFloat(matches[1] + (matches[2] ? '.' + matches[2] : ''));
+                    if (note >= 0 && note <= 20) {
+                        extractedGrades[key] = note;
+                    }
+                }
+            }
+        }
+
+        function displayExtractedData() {
+            const extractedDiv = document.getElementById('extractedData');
+            
+            let html = `
+                <div class="section">
+                    <h3>📝 Notes extraites - Vérifiez et ajustez si nécessaire</h3>
+                    <div class="warning-box">
+                        <p><strong>⚠️ Important :</strong> L'extraction automatique n'est pas toujours parfaite. Vérifiez les notes ci-dessous et corrigez si nécessaire.</p>
+                    </div>
+                    <div class="notes-grid">
+            `;
+
+            const fields = [
+                { id: 'spe_abandon', label: 'Spécialité abandonnée', coef: 8 },
+                { id: 'lva_1', label: 'LVA (1ère)', coef: 3 },
+                { id: 'lvb_1', label: 'LVB (1ère)', coef: 3 },
+                { id: 'hg_1', label: 'Histoire-Géo (1ère)', coef: 3 },
+                { id: 'es_1', label: 'Ens. Scientifique (1ère)', coef: 3 },
+                { id: 'emc_1', label: 'EMC (1ère)', coef: 1 },
+                { id: 'lva_t', label: 'LVA (Term)', coef: 3 },
+                { id: 'lvb_t', label: 'LVB (Term)', coef: 3 },
+                { id: 'hg_t', label: 'Histoire-Géo (Term)', coef: 3 },
+                { id: 'es_t', label: 'Ens. Scientifique (Term)', coef: 3 },
+                { id: 'eps', label: 'EPS', coef: 6 },
+                { id: 'emc_t', label: 'EMC (Term)', coef: 1 },
+            ];
+
+            fields.forEach(field => {
+                const value = extractedGrades[field.id] || '';
+                const status = value ? '<span class="badge badge-success">✓ Trouvée</span>' : '<span class="badge badge-warning">⚠ À compléter</span>';
+                
+                html += `
+                    <div class="grade-input">
+                        <label>${field.label} <span class="coef-badge">×${field.coef}</span> ${status}</label>
+                        <input type="number" id="pdf_${field.id}" min="0" max="20" step="0.1" 
+                               value="${value}" placeholder="0-20" class="${value ? 'auto-filled' : ''}">
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                    <div class="info-box" style="margin-top: 20px;">
+                        <p><strong>💡 Estimation intelligente :</strong></p>
+                        <p>Pour les épreuves terminales que vous n'avez pas encore passées (philo, spécialités, grand oral, français), l'application utilisera vos moyennes actuelles dans ces matières pour faire une projection.</p>
+                    </div>
+                </div>
+            `;
+
+            extractedDiv.innerHTML = html;
+        }
+
+        function calculerFromPDF() {
+            // Récupérer les notes vérifiées/ajustées
+            let totalPoints = 0;
+            let totalCoef = 0;
+
+            const grades = [
+                { id: 'spe_abandon', coef: 8, name: 'Spécialité abandonnée' },
+                { id: 'lva_1', coef: 3, name: 'LVA (1ère)' },
+                { id: 'lvb_1', coef: 3, name: 'LVB (1ère)' },
+                { id: 'hg_1', coef: 3, name: 'Histoire-Géo (1ère)' },
+                { id: 'es_1', coef: 3, name: 'Ens. Scientifique (1ère)' },
+                { id: 'emc_1', coef: 1, name: 'EMC (1ère)' },
+                { id: 'lva_t', coef: 3, name: 'LVA (Term)' },
+                { id: 'lvb_t', coef: 3, name: 'LVB (Term)' },
+                { id: 'hg_t', coef: 3, name: 'Histoire-Géo (Term)' },
+                { id: 'es_t', coef: 3, name: 'Ens. Scientifique (Term)' },
+                { id: 'eps', coef: 6, name: 'EPS' },
+                { id: 'emc_t', coef: 1, name: 'EMC (Term)' },
+            ];
+
+            // Calculer moyenne pour projection
+            let sumForProjection = 0;
+            let countForProjection = 0;
+
+            grades.forEach(grade => {
+                const input = document.getElementById('pdf_' + grade.id);
+                const value = parseFloat(input.value);
+                
+                if (input.value !== '' && !isNaN(value) && value >= 0 && value <= 20) {
+                    totalPoints += value * grade.coef;
+                    totalCoef += grade.coef;
+                    sumForProjection += value;
+                    countForProjection++;
+                }
+            });
+
+            // Projection intelligente pour les épreuves terminales
+            const avgForProjection = countForProjection > 0 ? sumForProjection / countForProjection : 12;
+
+            // Ajouter les épreuves terminales avec projection
+            const terminalExams = [
+                { coef: 5, name: 'Français écrit', avg: avgForProjection },
+                { coef: 5, name: 'Français oral', avg: avgForProjection },
+                { coef: 8, name: 'Philosophie', avg: avgForProjection },
+                { coef: 16, name: 'Spécialité 1', avg: avgForProjection },
+                { coef: 16, name: 'Spécialité 2', avg: avgForProjection },
+                { coef: 10, name: 'Grand oral', avg: avgForProjection }
+            ];
+
+            terminalExams.forEach(exam => {
+                totalPoints += exam.avg * exam.coef;
+                totalCoef += exam.coef;
+            });
+
+            const moyenne = totalPoints / totalCoef;
+            displayPDFResults(moyenne, totalCoef, totalPoints, avgForProjection);
+            prepareSimulationFromPDF(grades, terminalExams);
+        }
+
+        function displayPDFResults(moyenne, totalCoef, totalPoints, projection) {
+            let mention = '';
+            let mentionClass = '';
+            let status = '';
+
+            if (moyenne >= 18) {
+                mention = 'Très Bien avec Félicitations du Jury';
+                mentionClass = 'tb';
+                status = '🎉 Estimation : Admis avec les félicitations !';
+            } else if (moyenne >= 16) {
+                mention = 'Très Bien';
+                mentionClass = 'tb';
+                status = '🎉 Estimation : Admis avec mention Très Bien !';
+            } else if (moyenne >= 14) {
+                mention = 'Bien';
+                mentionClass = 'b';
+                status = '👏 Estimation : Admis avec mention Bien !';
+            } else if (moyenne >= 12) {
+                mention = 'Assez Bien';
+                mentionClass = 'ab';
+                status = '✅ Estimation : Admis avec mention Assez Bien !';
+            } else if (moyenne >= 10) {
+                mention = 'Sans mention';
+                status = '✅ Estimation : Admis sans mention';
+            } else if (moyenne >= 8) {
+                mention = 'Rattrapage';
+                mentionClass = 'rattrapage';
+                status = '⚠️ Estimation : Admis au rattrapage';
+            } else {
+                mention = 'Refusé';
+                mentionClass = 'refuse';
+                status = '❌ Estimation : Non admis';
+            }
+
+            const percentage = (moyenne / 20) * 100;
+
+            let resultsHTML = `
+                <div class="results">
+                    <h2>📊 Estimation de votre résultat au Bac</h2>
+                    
+                    <div class="warning-box" style="background: rgba(255,255,255,0.2); border-color: white; color: white;">
+                        <p><strong>ℹ️ Méthodologie de l'estimation :</strong></p>
+                        <p>• Contrôle continu : vos notes réelles des bulletins</p>
+                        <p>• Épreuves terminales : projection basée sur votre moyenne actuelle (${projection.toFixed(2)}/20)</p>
+                        <p>Cette estimation suppose que vous maintenez votre niveau actuel aux épreuves terminales.</p>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Moyenne estimée</span>
+                        <span class="result-value">${moyenne.toFixed(2)} / 20</span>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${percentage}%">
+                            ${percentage.toFixed(1)}%
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Statut estimé</span>
+                        <span class="result-value">${status}</span>
+                    </div>
+            `;
+
+            if (mention !== 'Sans mention' && mention !== 'Refusé') {
+                resultsHTML += `
+                    <div style="text-align: center; margin-top: 20px;">
+                        <div class="mention-badge ${mentionClass}">${mention}</div>
+                    </div>
+                `;
+            }
+
+            resultsHTML += `
+                <div class="info-box" style="background: rgba(255,255,255,0.2); border-color: white; color: white; margin-top: 20px;">
+                    <p><strong>💡 Conseil :</strong> Utilisez l'onglet "Simulation" pour tester différents scénarios et voir quelles notes viser aux épreuves terminales !</p>
+                </div>
+            `;
+
+            resultsHTML += '</div>';
+
+            document.getElementById('pdfResults').innerHTML = resultsHTML;
+        }
+
+        function prepareSimulationFromPDF(grades, terminalExams) {
+            let simulationHTML = `
+                <h3>Ajustez vos objectifs pour les épreuves terminales :</h3>
+                <p style="margin-bottom: 15px; color: #666;">Modifiez les notes ci-dessous pour voir l'impact sur votre résultat final.</p>
+                <div class="notes-grid">
+            `;
+
+            // Contrôle continu (lecture seule)
+            simulationHTML += '<h4 style="grid-column: 1/-1; color: #667eea; margin-top: 10px;">Contrôle Continu (de vos bulletins)</h4>';
+            grades.forEach(grade => {
+                const currentValue = document.getElementById('pdf_' + grade.id).value || '';
+                if (currentValue) {
+                    simulationHTML += `
+                        <div class="grade-input">
+                            <label>${grade.name} <span class="coef-badge">×${grade.coef}</span></label>
+                            <input type="number" value="${currentValue}" disabled style="background: #f0f0f0;">
+                        </div>
+                    `;
+                }
+            });
+
+            // Épreuves terminales (modifiables)
+            simulationHTML += '<h4 style="grid-column: 1/-1; color: #667eea; margin-top: 20px;">Épreuves Terminales (ajustez vos objectifs)</h4>';
+            const terminalFields = [
+                { id: 'fr_ecrit_sim', coef: 5, name: 'Français écrit' },
+                { id: 'fr_oral_sim', coef: 5, name: 'Français oral' },
+                { id: 'philo_sim', coef: 8, name: 'Philosophie' },
+                { id: 'spe1_sim', coef: 16, name: 'Spécialité 1' },
+                { id: 'spe2_sim', coef: 16, name: 'Spécialité 2' },
+                { id: 'grand_oral_sim', coef: 10, name: 'Grand oral' }
+            ];
+
+            const avgProjection = terminalExams[0].avg.toFixed(2);
+            terminalFields.forEach(field => {
+                simulationHTML += `
+                    <div class="grade-input">
+                        <label>${field.name} <span class="coef-badge">×${field.coef}</span></label>
+                        <input type="number" id="${field.id}" min="0" max="20" step="0.1" 
+                               value="${avgProjection}" placeholder="0-20">
+                    </div>
+                `;
+            });
+
+            simulationHTML += `
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="button" onclick="recalculerSimulationPDF()">🔄 Recalculer avec ces notes</button>
+                </div>
+                <div id="sim-results"></div>
+            `;
+
+            document.getElementById('simulation-content').innerHTML = simulationHTML;
+        }
+
+        function recalculerSimulationPDF() {
+            let totalPoints = 0;
+            let totalCoef = 0;
+
+            // Récupérer les notes de contrôle continu
+            const ccGrades = [
+                { id: 'spe_abandon', coef: 8 },
+                { id: 'lva_1', coef: 3 },
+                { id: 'lvb_1', coef: 3 },
+                { id: 'hg_1', coef: 3 },
+                { id: 'es_1', coef: 3 },
+                { id: 'emc_1', coef: 1 },
+                { id: 'lva_t', coef: 3 },
+                { id: 'lvb_t', coef: 3 },
+                { id: 'hg_t', coef: 3 },
+                { id: 'es_t', coef: 3 },
+                { id: 'eps', coef: 6 },
+                { id: 'emc_t', coef: 1 },
+            ];
+
+            ccGrades.forEach(grade => {
+                const input = document.getElementById('pdf_' + grade.id);
+                const value = parseFloat(input.value);
+                if (input.value !== '' && !isNaN(value)) {
+                    totalPoints += value * grade.coef;
+                    totalCoef += grade.coef;
+                }
+            });
+
+            // Récupérer les notes simulées des épreuves terminales
+            const simFields = [
+                { id: 'fr_ecrit_sim', coef: 5 },
+                { id: 'fr_oral_sim', coef: 5 },
+                { id: 'philo_sim', coef: 8 },
+                { id: 'spe1_sim', coef: 16 },
+                { id: 'spe2_sim', coef: 16 },
+                { id: 'grand_oral_sim', coef: 10 }
+            ];
+
+            simFields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const value = parseFloat(input.value);
+                if (input.value !== '' && !isNaN(value)) {
+                    totalPoints += value * field.coef;
+                    totalCoef += field.coef;
+                }
+            });
+
+            const moyenne = totalPoints / totalCoef;
+            displaySimulationResults(moyenne);
+        }
+
+        function displaySimulationResults(moyenne) {
+            let mention = '';
+            let mentionClass = '';
+            let status = '';
+
+            if (moyenne >= 18) {
+                mention = 'Très Bien avec Félicitations';
+                mentionClass = 'tb';
+                status = '🎉 Admis avec les félicitations !';
+            } else if (moyenne >= 16) {
+                mention = 'Très Bien';
+                mentionClass = 'tb';
+                status = '🎉 Admis avec mention Très Bien !';
+            } else if (moyenne >= 14) {
+                mention = 'Bien';
+                mentionClass = 'b';
+                status = '👏 Admis avec mention Bien !';
+            } else if (moyenne >= 12) {
+                mention = 'Assez Bien';
+                mentionClass = 'ab';
+                status = '✅ Admis avec mention Assez Bien !';
+            } else if (moyenne >= 10) {
+                mention = 'Sans mention';
+                status = '✅ Admis sans mention';
+            } else if (moyenne >= 8) {
+                mention = 'Rattrapage';
+                mentionClass = 'rattrapage';
+                status = '⚠️ Admis au rattrapage';
+            } else {
+                mention = 'Refusé';
+                mentionClass = 'refuse';
+                status = '❌ Non admis';
+            }
+
+            const percentage = (moyenne / 20) * 100;
+
+            let resultsHTML = `
+                <div class="results" style="margin-top: 30px;">
+                    <h2>📊 Résultat de votre simulation</h2>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Moyenne simulée</span>
+                        <span class="result-value">${moyenne.toFixed(2)} / 20</span>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${percentage}%">
+                            ${percentage.toFixed(1)}%
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Statut</span>
+                        <span class="result-value">${status}</span>
+                    </div>
+            `;
+
+            if (mention !== 'Sans mention' && mention !== 'Refusé') {
+                resultsHTML += `
+                    <div style="text-align: center; margin-top: 20px;">
+                        <div class="mention-badge ${mentionClass}">${mention}</div>
+                    </div>
+                `;
+            }
+
+            resultsHTML += '</div>';
+            document.getElementById('sim-results').innerHTML = resultsHTML;
+        }
+
+        // Fonctions de l'onglet saisie manuelle (conservées de la version précédente)
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function calculer() {
+            let totalPoints = 0;
+            let totalCoef = 0;
+
+            const grades = [
+                { id: 'spe_abandon', coef: 8, name: 'Spécialité abandonnée' },
+                { id: 'lva_1', coef: 3, name: 'LVA (1ère)' },
+                { id: 'lvb_1', coef: 3, name: 'LVB (1ère)' },
+                { id: 'hg_1', coef: 3, name: 'Histoire-Géo (1ère)' },
+                { id: 'es_1', coef: 3, name: 'Ens. Scientifique (1ère)' },
+                { id: 'emc_1', coef: 1, name: 'EMC (1ère)' },
+                { id: 'lva_t', coef: 3, name: 'LVA (Term)' },
+                { id: 'lvb_t', coef: 3, name: 'LVB (Term)' },
+                { id: 'hg_t', coef: 3, name: 'Histoire-Géo (Term)' },
+                { id: 'es_t', coef: 3, name: 'Ens. Scientifique (Term)' },
+                { id: 'eps', coef: 6, name: 'EPS' },
+                { id: 'emc_t', coef: 1, name: 'EMC (Term)' },
+                { id: 'fr_ecrit', coef: 5, name: 'Français écrit' },
+                { id: 'fr_oral', coef: 5, name: 'Français oral' },
+                { id: 'philo', coef: 8, name: 'Philosophie' },
+                { id: 'spe1', coef: 16, name: 'Spécialité 1' },
+                { id: 'spe2', coef: 16, name: 'Spécialité 2' },
+                { id: 'grand_oral', coef: 10, name: 'Grand oral' }
+            ];
+
+            grades.forEach(grade => {
+                const input = document.getElementById(grade.id);
+                const value = parseFloat(input.value);
+                
+                if (input.value !== '' && !isNaN(value) && value >= 0 && value <= 20) {
+                    totalPoints += value * grade.coef;
+                    totalCoef += grade.coef;
+                }
+            });
+
+            if (totalCoef === 0) {
+                alert('Veuillez entrer au moins une note !');
+                return;
+            }
+
+            const moyenne = totalPoints / totalCoef;
+            displayResults(moyenne, totalCoef, totalPoints);
+            prepareSimulation(grades);
+        }
+
+        function displayResults(moyenne, totalCoef, totalPoints) {
+            let mention = '';
+            let mentionClass = '';
+            let status = '';
+
+            if (moyenne >= 18) {
+                mention = 'Très Bien avec Félicitations du Jury';
+                mentionClass = 'tb';
+                status = '🎉 Admis avec les félicitations !';
+            } else if (moyenne >= 16) {
+                mention = 'Très Bien';
+                mentionClass = 'tb';
+                status = '🎉 Admis avec mention Très Bien !';
+            } else if (moyenne >= 14) {
+                mention = 'Bien';
+                mentionClass = 'b';
+                status = '👏 Admis avec mention Bien !';
+            } else if (moyenne >= 12) {
+                mention = 'Assez Bien';
+                mentionClass = 'ab';
+                status = '✅ Admis avec mention Assez Bien !';
+            } else if (moyenne >= 10) {
+                mention = 'Sans mention';
+                status = '✅ Admis sans mention';
+            } else if (moyenne >= 8) {
+                mention = 'Rattrapage';
+                mentionClass = 'rattrapage';
+                status = '⚠️ Admis au rattrapage';
+            } else {
+                mention = 'Refusé';
+                mentionClass = 'refuse';
+                status = '❌ Non admis';
+            }
+
+            const percentage = (moyenne / 20) * 100;
+
+            let resultsHTML = `
+                <div class="results">
+                    <h2>📊 Vos résultats</h2>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Moyenne générale</span>
+                        <span class="result-value">${moyenne.toFixed(2)} / 20</span>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${percentage}%">
+                            ${percentage.toFixed(1)}%
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Statut</span>
+                        <span class="result-value">${status}</span>
+                    </div>
+            `;
+
+            if (mention !== 'Sans mention' && mention !== 'Refusé') {
+                resultsHTML += `
+                    <div style="text-align: center; margin-top: 20px;">
+                        <div class="mention-badge ${mentionClass}">${mention}</div>
+                    </div>
+                `;
+            }
+
+            resultsHTML += '</div>';
+            document.getElementById('results').innerHTML = resultsHTML;
+        }
+
+        function prepareSimulation(grades) {
+            let simulationHTML = `
+                <h3>Modifiez vos notes espérées :</h3>
+                <p style="margin-bottom: 15px; color: #666;">Ajustez les notes ci-dessous pour voir l'impact sur votre résultat.</p>
+                <div class="notes-grid">
+            `;
+
+            grades.forEach(grade => {
+                const currentValue = document.getElementById(grade.id).value || '';
+                simulationHTML += `
+                    <div class="grade-input">
+                        <label>${grade.name} <span class="coef-badge">×${grade.coef}</span></label>
+                        <input type="number" id="sim_${grade.id}" min="0" max="20" step="0.1" value="${currentValue}" placeholder="0-20">
+                    </div>
+                `;
+            });
+
+            simulationHTML += `
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="button" onclick="calculerSimulation()">🔄 Recalculer</button>
+                </div>
+                <div id="sim-results"></div>
+            `;
+
+            document.getElementById('simulation-content').innerHTML = simulationHTML;
+        }
+
+        function calculerSimulation() {
+            let totalPoints = 0;
+            let totalCoef = 0;
+
+            const grades = [
+                { id: 'spe_abandon', coef: 8 },
+                { id: 'lva_1', coef: 3 },
+                { id: 'lvb_1', coef: 3 },
+                { id: 'hg_1', coef: 3 },
+                { id: 'es_1', coef: 3 },
+                { id: 'emc_1', coef: 1 },
+                { id: 'lva_t', coef: 3 },
+                { id: 'lvb_t', coef: 3 },
+                { id: 'hg_t', coef: 3 },
+                { id: 'es_t', coef: 3 },
+                { id: 'eps', coef: 6 },
+                { id: 'emc_t', coef: 1 },
+                { id: 'fr_ecrit', coef: 5 },
+                { id: 'fr_oral', coef: 5 },
+                { id: 'philo', coef: 8 },
+                { id: 'spe1', coef: 16 },
+                { id: 'spe2', coef: 16 },
+                { id: 'grand_oral', coef: 10 }
+            ];
+
+            grades.forEach(grade => {
+                const input = document.getElementById('sim_' + grade.id);
+                const value = parseFloat(input.value);
+                
+                if (input.value !== '' && !isNaN(value)) {
+                    totalPoints += value * grade.coef;
+                    totalCoef += grade.coef;
+                }
+            });
+
+            const moyenne = totalPoints / totalCoef;
+            displaySimulationResults(moyenne);
+        }
+
+        function reset() {
+            if (confirm('Voulez-vous réinitialiser toutes les notes ?')) {
+                document.querySelectorAll('input[type="number"]').forEach(input => {
+                    input.value = '';
+                });
+                document.getElementById('results').innerHTML = '';
+                uploadedFiles = [];
+                extractedGrades = {};
+                displayFileList();
+                document.getElementById('processingStatus').innerHTML = '';
+                document.getElementById('extractedData').innerHTML = '';
+                document.getElementById('pdfResults').innerHTML = '';
+                document.getElementById('calculateFromPDFBtn').style.display = 'none';
+                document.getElementById('simulation-content').innerHTML = '<p style="text-align: center; color: #999;">Veuillez d\'abord calculer une estimation.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

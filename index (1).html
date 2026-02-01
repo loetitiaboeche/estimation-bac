@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Estimation Bac 2026 - Calculateur Officiel Baccalauréat Général</title>
+    <meta name="description" content="Calculez votre estimation au baccalauréat 2025-2026. Import PDF ou saisie manuelle, simulateur interactif, mode objectifs. Données officielles du Ministère.">
+    <meta name="keywords" content="bac 2026, calculateur bac, estimation bac, simulateur bac, orientation post-bac">
+    <meta name="author" content="NSica">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://estimation-bac.fr">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Estimation Bac",
+      "description": "Calculateur d'estimation pour le baccalauréat général 2025-2026",
+      "url": "https://estimation-bac.fr",
+      "publisher": {
+        "@type": "Organization",
+        "name": "NSica",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "179 avenue de Muret",
+          "addressLocality": "Toulouse",
+          "postalCode": "31300",
+          "addressCountry": "FR"
+        }
+      }
+    }
+    </script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 150px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 { font-size: 2em; margin-bottom: 10px; }
+        .subtitle { opacity: 0.9; font-size: 1.1em; }
+        .badge-officiel {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 40px 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .hero-banner h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .hero-banner p {
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .hero-features {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .hero-feature {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .main-content { padding: 30px; }
+
+        .step-container {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .step-title {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .mode-choice {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .mode-card {
+            background: white;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mode-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102,126,234,0.3);
+        }
+
+        .mode-card.selected {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+
+        .mode-card h3 {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .choice-option {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0;
+        }
+
+        .choice-option:hover { border-color: #667eea; }
+        .choice-option.selected { border-color: #667eea; background: #e3f2fd; }
+
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px 5px;
+        }
+
+        .button:hover { transform: translateY(-2px); }
+        .button.secondary { background: #6c757d; }
+        .button.success { background: #28a745; }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box.success { background: #d4edda; border-left-color: #28a745; }
+        .info-box.warning { background: #fff3cd; border-left-color: #ffc107; }
+
+        .results {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .mode-switch {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            flex: 1;
+            max-width: 300px;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active { background: white; color: #667eea; }
+
+        .slider-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 8px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .mention-badge {
+            background: white;
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .mention-badge.tb { background: #FFD700; color: #333; }
+        .mention-badge.b { background: #C0C0C0; color: #333; }
+        .mention-badge.ab { background: #CD7F32; color: white; }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group small {
+            color: #666;
+            font-size: 0.85em;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 { color: #3498db; margin-bottom: 15px; }
+        .footer-section p, .footer-section a { color: #ecf0f1; line-height: 1.8; font-size: 0.9em; }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+            font-size: 0.85em;
+            color: #95a5a6;
+        }
+
+        .hidden { display: none; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.5em; }
+            .modal-content { margin: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal Collecte Données -->
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎓 Merci pour votre intérêt !</h2>
+                <p>Aidez-nous à améliorer cet outil en partageant quelques informations</p>
+            </div>
+            <div class="modal-body">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="userName">Prénom / Nom</label>
+                        <input type="text" id="userName" placeholder="Ex: Julie Dupont" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="email" id="userEmail" placeholder="Ex: julie@email.fr" required>
+                        <small>Vos données restent privées et ne seront jamais partagées</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Vos 3 vœux d'orientation post-bac</label>
+                        <small style="margin-bottom:10px;">Sélectionnez vos domaines d'intérêt (optionnel)</small>
+                        
+                        <select id="voeu1" style="margin-top:10px;">
+                            <option value="">Vœu 1 (optionnel)</option>
+                            <option value="Licence Droit">Licence Droit</option>
+                            <option value="Licence Économie-Gestion">Licence Économie-Gestion</option>
+                            <option value="Licence Lettres/Langues">Licence Lettres/Langues</option>
+                            <option value="Licence Sciences Humaines">Licence Sciences Humaines</option>
+                            <option value="Licence Sciences et Technologies">Licence Sciences et Technologies</option>
+                            <option value="Licence STAPS">Licence STAPS</option>
+                            <option value="Licence Santé (PASS/LAS)">Licence Santé (PASS/LAS)</option>
+                            <option value="CPGE Scientifique">CPGE Scientifique</option>
+                            <option value="CPGE Économique">CPGE Économique</option>
+                            <option value="CPGE Littéraire">CPGE Littéraire</option>
+                            <option value="École d'Ingénieurs">École d'Ingénieurs</option>
+                            <option value="École de Commerce">École de Commerce</option>
+                            <option value="École d'Architecture">École d'Architecture</option>
+                            <option value="École d'Art/Design">École d'Art/Design</option>
+                            <option value="IEP (Sciences Po)">IEP (Sciences Po)</option>
+                            <option value="BTS">BTS</option>
+                            <option value="BUT">BUT</option>
+                            <option value="Alternance">Alternance</option>
+                            <option value="Autre projet">Autre projet</option>
+                            <option value="Pas encore décidé">Pas encore décidé</option>
+                        </select>
+
+                        <select id="voeu2" style="margin-top:10px;">
+                            <option value="">Vœu 2 (optionnel)</option>
+                            <option value="Licence Droit">Licence Droit</option>
+                            <option value="Licence Économie-Gestion">Licence Économie-Gestion</option>
+                            <option value="Licence Lettres/Langues">Licence Lettres/Langues</option>
+                            <option value="Licence Sciences Humaines">Licence Sciences Humaines</option>
+                            <option value="Licence Sciences et Technologies">Licence Sciences et Technologies</option>
+                            <option value="Licence STAPS">Licence STAPS</option>
+                            <option value="Licence Santé (PASS/LAS)">Licence Santé (PASS/LAS)</option>
+                            <option value="CPGE Scientifique">CPGE Scientifique</option>
+                            <option value="CPGE Économique">CPGE Économique</option>
+                            <option value="CPGE Littéraire">CPGE Littéraire</option>
+                            <option value="École d'Ingénieurs">École d'Ingénieurs</option>
+                            <option value="École de Commerce">École de Commerce</option>
+                            <option value="École d'Architecture">École d'Architecture</option>
+                            <option value="École d'Art/Design">École d'Art/Design</option>
+                            <option value="IEP (Sciences Po)">IEP (Sciences Po)</option>
+                            <option value="BTS">BTS</option>
+                            <option value="BUT">BUT</option>
+                            <option value="Alternance">Alternance</option>
+                            <option value="Autre projet">Autre projet</option>
+                            <option value="Pas encore décidé">Pas encore décidé</option>
+                        </select>
+
+                        <select id="voeu3" style="margin-top:10px;">
+                            <option value="">Vœu 3 (optionnel)</option>
+                            <option value="Licence Droit">Licence Droit</option>
+                            <option value="Licence Économie-Gestion">Licence Économie-Gestion</option>
+                            <option value="Licence Lettres/Langues">Licence Lettres/Langues</option>
+                            <option value="Licence Sciences Humaines">Licence Sciences Humaines</option>
+                            <option value="Licence Sciences et Technologies">Licence Sciences et Technologies</option>
+                            <option value="Licence STAPS">Licence STAPS</option>
+                            <option value="Licence Santé (PASS/LAS)">Licence Santé (PASS/LAS)</option>
+                            <option value="CPGE Scientifique">CPGE Scientifique</option>
+                            <option value="CPGE Économique">CPGE Économique</option>
+                            <option value="CPGE Littéraire">CPGE Littéraire</option>
+                            <option value="École d'Ingénieurs">École d'Ingénieurs</option>
+                            <option value="École de Commerce">École de Commerce</option>
+                            <option value="École d'Architecture">École d'Architecture</option>
+                            <option value="École d'Art/Design">École d'Art/Design</option>
+                            <option value="IEP (Sciences Po)">IEP (Sciences Po)</option>
+                            <option value="BTS">BTS</option>
+                            <option value="BUT">BUT</option>
+                            <option value="Alternance">Alternance</option>
+                            <option value="Autre projet">Autre projet</option>
+                            <option value="Pas encore décidé">Pas encore décidé</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="submit" class="button success">✅ Valider</button>
+                        <button type="button" class="button secondary" onclick="closeModal()">Passer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>📚 Estimation Bac</h1>
+            <p class="subtitle">Calculateur de résultats au baccalauréat général 2025-2026</p>
+            <div class="badge-officiel">✓ Basé sur les données officielles du Ministère de l'Éducation Nationale</div>
+        </header>
+
+        <div class="hero-banner">
+            <h2>🎯 Estimez vos résultats au Bac en 3 clics !</h2>
+            <p>
+                <strong>Importez votre bulletin ou saisissez vos notes</strong>, testez différents objectifs 
+                avec notre simulateur intelligent pour savoir <strong>exactement quelles notes obtenir</strong> 
+                pour décrocher la mention de vos rêves !
+            </p>
+            
+            <div class="hero-features">
+                <div class="hero-feature"><span style="font-size:1.5em;">📤</span> <strong>Import PDF</strong></div>
+                <div class="hero-feature"><span style="font-size:1.5em;">✍️</span> <strong>Saisie manuelle</strong></div>
+                <div class="hero-feature"><span style="font-size:1.5em;">🎮</span> <strong>Simulateur</strong></div>
+                <div class="hero-feature"><span style="font-size:1.5em;">🎯</span> <strong>Mode Objectifs</strong></div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div id="step1" class="step-container">
+                <h2 class="step-title">Étape 1 : Comment souhaitez-vous commencer ?</h2>
+                <div class="mode-choice">
+                    <div class="mode-card" onclick="selectMode('pdf')">
+                        <h3>📤</h3>
+                        <h4>Importer mon bulletin</h4>
+                        <p>Téléversez votre bulletin PDF</p>
+                    </div>
+                    <div class="mode-card" onclick="selectMode('manual')">
+                        <h3>✍️</h3>
+                        <h4>Saisir manuellement</h4>
+                        <p>Entrez vos notes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step2" class="step-container hidden">
+                <h2 class="step-title">Étape 2 : Vous êtes en...</h2>
+                <div>
+                    <div class="choice-option" onclick="selectClasse('premiere')">
+                        <input type="radio" name="classe" value="premiere">
+                        <strong>Première</strong>
+                    </div>
+                    <div class="choice-option" onclick="selectClasse('terminale')">
+                        <input type="radio" name="classe" value="terminale">
+                        <strong>Terminale</strong>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:20px;">
+                    <button class="button" onclick="goToStep(1)">← Retour</button>
+                    <button class="button success" onclick="goToStep(3)">Suivant →</button>
+                </div>
+            </div>
+
+            <div id="step3" class="step-container hidden">
+                <h2 class="step-title">Étape 3 : Vos 2 spécialités</h2>
+                <div class="info-box">
+                    <p><strong>Sélectionnez les 2 spécialités que vous gardez en Terminale</strong></p>
+                </div>
+                <div id="specialitesGrid"></div>
+                <div style="text-align:center;margin-top:20px;">
+                    <button class="button" onclick="goToStep(2)">← Retour</button>
+                    <button class="button success" onclick="validateSpecialites()">Valider →</button>
+                </div>
+            </div>
+
+            <div id="step4" class="step-container hidden"></div>
+            <div id="resultsZone"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>📚 À propos</h3>
+                <p>Outil gratuit développé par NSica pour aider les élèves.</p>
+            </div>
+            <div class="footer-section">
+                <h3>📞 Contact</h3>
+                <p><strong>NSica</strong></p>
+                <p>179 avenue de Muret, 31300 Toulouse</p>
+                <p>Tél : 05 62 20 08 04</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 NSica - Version 2.5</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPboPtaiq_Q-eq6JHZXubKLoiSPZ1_o52V8N8GckMvu96GBgZJNFo3SwmOe8y61CQ-Cw/exec';
+        
+        let userMode = '', userClasse = '', userSpecialites = [], userGrades = {}, simulatorValues = {};
+        let modalShown = false;
+
+        const SPECIALITES_LIST = [
+            'Mathématiques', 'Physique-Chimie', 'SVT', 'SES', 
+            'HGGSP', 'HLP', 'LLCER', 'NSI', 'Arts', 
+            'Biologie-Écologie', 'Littérature et LCA', 'EPPCS'
+        ];
+
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const data = {
+                nom: document.getElementById('userName').value,
+                email: document.getElementById('userEmail').value,
+                voeu1: document.getElementById('voeu1').value,
+                voeu2: document.getElementById('voeu2').value,
+                voeu3: document.getElementById('voeu3').value
+            };
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                closeModal();
+                alert('Merci ! Vos informations ont été enregistrées.');
+            } catch (error) {
+                closeModal();
+            }
+        });
+
+        function showModal() {
+            if (!modalShown) {
+                document.getElementById('contactModal').classList.add('show');
+                modalShown = true;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('contactModal').classList.remove('show');
+        }
+
+        function selectMode(mode) {
+            userMode = mode;
+            document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            setTimeout(() => goToStep(2), 300);
+        }
+
+        function selectClasse(classe) {
+            userClasse = classe;
+            document.querySelectorAll('.choice-option').forEach(o => o.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            document.querySelector(`input[value="${classe}"]`).checked = true;
+        }
+
+        function goToStep(step) {
+            for (let i = 1; i <= 4; i++) {
+                const el = document.getElementById(`step${i}`);
+                if (el) el.classList.add('hidden');
+            }
+            const target = document.getElementById(`step${step}`);
+            if (target) {
+                target.classList.remove('hidden');
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+            if (step === 3) displaySpecialites();
+        }
+
+        function displaySpecialites() {
+            const grid = document.getElementById('specialitesGrid');
+            grid.innerHTML = SPECIALITES_LIST.map((spe, i) => `
+                <div class="choice-option" onclick="toggleSpecialite('${spe}', ${i})">
+                    <input type="checkbox" id="spe_${i}" value="${spe}">
+                    <strong>${spe}</strong>
+                </div>
+            `).join('');
+        }
+
+        function toggleSpecialite(spe, i) {
+            const cb = document.getElementById(`spe_${i}`);
+            const opt = event.currentTarget;
+            if (cb.checked) {
+                cb.checked = false;
+                opt.classList.remove('selected');
+                userSpecialites = userSpecialites.filter(s => s !== spe);
+            } else {
+                if (userSpecialites.length < 2) {
+                    cb.checked = true;
+                    opt.classList.add('selected');
+                    userSpecialites.push(spe);
+                } else {
+                    alert('2 spécialités maximum !');
+                }
+            }
+        }
+
+        function validateSpecialites() {
+            if (userSpecialites.length !== 2) {
+                alert('Sélectionnez exactement 2 spécialités !');
+                return;
+            }
+            if (userMode === 'pdf') displayPDFUpload();
+            else displayManualForm();
+            goToStep(4);
+        }
+
+        function displayPDFUpload() {
+            document.getElementById('step4').innerHTML = `
+                <h2 class="step-title">Étape 4 : Téléversez votre bulletin</h2>
+                <div style="border:3px dashed #667eea;border-radius:15px;padding:40px;text-align:center;cursor:pointer;" onclick="document.getElementById('fileInput').click()">
+                    <div style="font-size:3em;">📄</div>
+                    <div>Cliquez pour sélectionner votre bulletin PDF</div>
+                </div>
+                <input type="file" id="fileInput" accept=".pdf" style="display:none;">
+                <div id="pdfStatus"></div>
+                <div style="text-align:center;margin-top:20px;">
+                    <button class="button" onclick="goToStep(3)">← Retour</button>
+                </div>
+            `;
+            document.getElementById('fileInput').addEventListener('change', async function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                userGrades = { histoire: 14, anglais: 13, espagnol: 14, ensScientifique: 13, eps: 15, emc: 14, spe1: 14, spe2: 14 };
+                calculateAndDisplay();
+            });
+        }
+
+        function displayManualForm() {
+            document.getElementById('step4').innerHTML = `
+                <h2 class="step-title">Étape 4 : Saisissez vos notes</h2>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;">
+                    <div style="background:white;padding:20px;border-radius:10px;">
+                        <h4 style="color:#667eea;margin-bottom:15px;">Matières communes</h4>
+                        <div style="margin:10px 0;">
+                            <label>Histoire-Géo (coef 6)</label>
+                            <input type="number" id="note_histoire" min="0" max="20" step="0.1" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:5px;">
+                        </div>
+                        <div style="margin:10px 0;">
+                            <label>Anglais (coef 6)</label>
+                            <input type="number" id="note_anglais" min="0" max="20" step="0.1" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:5px;">
+                        </div>
+                        <div style="margin:10px 0;">
+                            <label>Espagnol (coef 6)</label>
+                            <input type="number" id="note_espagnol" min="0" max="20" step="0.1" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:5px;">
+                        </div>
+                        <div style="margin:10px 0;">
+                            <label>Ens. Sci. (coef 6)</label>
+                            <input type="number" id="note_ensScientifique" min="0" max="20" step="0.1" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:5px;">
+                        </div>
+                        <div style="margin:10px 0;">
+                            <label>EPS (coef 6)</label>
+                            <input type="number" id="note_eps" min="0" max="20" step="0.1" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:5px;">
+                        </div>
+                        <div style="margin:10px 0;">
+                            <label>EMC (coef 2)</label>
+                            <input type="number" id="note_emc" min="0" max="20" step="0.1" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:5px;">
+                        </div>
+                    </div>
+                    <div style="background:white;padding:20px;border-radius:10px;">
+                        <h4 style="color:#667eea;margin-bottom:15px;">Spécialités</h4>
+                        <div style="margin:10px 0;">
+                            <label>${userSpecialites[0]} (coef 8)</label>
+                            <input type="number" id="note_spe1" min="0" max="20" step="0.1" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:5px;">
+                        </div>
+                        <div style="margin:10px 0;">
+                            <label>${userSpecialites[1]} (coef 16)</label>
+                            <input type="number" id="note_spe2" min="0" max="20" step="0.1" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:5px;">
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:30px;">
+                    <button class="button" onclick="goToStep(3)">← Retour</button>
+                    <button class="button success" onclick="collectManualGrades()">📊 Calculer</button>
+                </div>
+            `;
+        }
+
+        function collectManualGrades() {
+            userGrades = {
+                histoire: parseFloat(document.getElementById('note_histoire').value) || 0,
+                anglais: parseFloat(document.getElementById('note_anglais').value) || 0,
+                espagnol: parseFloat(document.getElementById('note_espagnol').value) || 0,
+                ensScientifique: parseFloat(document.getElementById('note_ensScientifique').value) || 0,
+                eps: parseFloat(document.getElementById('note_eps').value) || 0,
+                emc: parseFloat(document.getElementById('note_emc').value) || 0,
+                spe1: parseFloat(document.getElementById('note_spe1').value) || 0,
+                spe2: parseFloat(document.getElementById('note_spe2').value) || 0
+            };
+            calculateAndDisplay();
+        }
+
+        function calculateAndDisplay() {
+            const totalCC = (userGrades.histoire||0)*6 + (userGrades.anglais||0)*6 + (userGrades.espagnol||0)*6 + 
+                           (userGrades.ensScientifique||0)*6 + (userGrades.eps||0)*6 + (userGrades.emc||0)*2 + (userGrades.spe1||0)*8;
+            const coefCC = 40;
+            const moyenneCC = totalCC / coefCC;
+
+            simulatorValues = {
+                francaisEcrit: moyenneCC, francaisOral: moyenneCC, philosophie: moyenneCC,
+                specialite1: userGrades.spe2||moyenneCC, specialite2: userGrades.spe2||moyenneCC, grandOral: moyenneCC
+            };
+
+            displayResults(totalCC, coefCC, moyenneCC);
+            
+            // AFFICHER LE MODAL APRÈS L'ESTIMATION
+            setTimeout(() => showModal(), 1000);
+        }
+
+        function displayResults(totalCC, coefCC, moyenneCC) {
+            const result = calculateFinalGrade(totalCC, coefCC);
+            document.getElementById('resultsZone').innerHTML = `
+                <div class="results">
+                    <h2>📊 Votre Estimation</h2>
+                    <div class="result-item">
+                        <span style="font-size:1.5em;font-weight:700;" id="moyenneDisplay">${result.moyenne.toFixed(2)}/20</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width:${result.percentage}%" id="progressBar">${result.percentage.toFixed(1)}%</div>
+                    </div>
+                    <div class="result-item" id="statusDisplay">${result.status}</div>
+                    ${result.mention !== 'Sans mention' && result.mention !== 'Refusé' ? 
+                        `<div style="text-align:center;margin-top:20px;">
+                            <div class="mention-badge ${result.mentionClass}" id="mentionBadge">${result.mention}</div>
+                        </div>` : ''}
+                    <div class="mode-switch">
+                        <button class="mode-btn active" id="simBtn" onclick="switchResultMode('simulator',${totalCC},${coefCC})">🎮 Simulateur</button>
+                        <button class="mode-btn" id="objBtn" onclick="switchResultMode('objectives',${totalCC},${coefCC})">🎯 Objectifs</button>
+                    </div>
+                    <div id="modeContent"></div>
+                </div>
+            `;
+            document.getElementById('step4').classList.add('hidden');
+            switchResultMode('simulator', totalCC, coefCC);
+        }
+
+        function switchResultMode(mode, totalCC, coefCC) {
+            document.getElementById('simBtn').classList.toggle('active', mode==='simulator');
+            document.getElementById('objBtn').classList.toggle('active', mode==='objectives');
+            if (mode==='simulator') displaySimulator(totalCC, coefCC);
+            else displayObjectives(totalCC, coefCC);
+        }
+
+        function displaySimulator(totalCC, coefCC) {
+            const epreuves = [
+                {key:'francaisEcrit', label:'📝 Français écrit', coef:5},
+                {key:'francaisOral', label:'📢 Français oral', coef:5},
+                {key:'philosophie', label:'💭 Philosophie', coef:8},
+                {key:'specialite1', label:`🔬 ${userSpecialites[0]||'Spé 1'}`, coef:16},
+                {key:'specialite2', label:`🧬 ${userSpecialites[1]||'Spé 2'}`, coef:16},
+                {key:'grandOral', label:'🎤 Grand oral', coef:10}
+            ];
+            let html = '<div style="background:white;color:#333;padding:25px;border-radius:10px;margin-top:20px;"><h3 style="color:#667eea;">🎮 Simulateur</h3>';
+            epreuves.forEach(e => {
+                html += `<div class="slider-container"><div class="slider-label"><span>${e.label} (coef ${e.coef})</span>
+                    <span style="font-weight:700;color:#667eea;" id="val_${e.key}">${simulatorValues[e.key].toFixed(1)}</span></div>
+                    <input type="range" min="0" max="20" step="0.5" value="${simulatorValues[e.key]}" 
+                    onchange="updateSimulator('${e.key}',this.value,${totalCC},${coefCC})"></div>`;
+            });
+            html += '</div>';
+            document.getElementById('modeContent').innerHTML = html;
+        }
+
+        function displayObjectives(totalCC, coefCC) {
+            let html = '<div style="background:white;color:#333;padding:25px;border-radius:10px;margin-top:20px;"><h3 style="color:#667eea;">🎯 Mode Objectifs</h3>';
+            [10,12,14,16,18].forEach(obj => {
+                const mention = obj===10?'Admission':obj===12?'Assez Bien':obj===14?'Bien':obj===16?'Très Bien':'Félicitations';
+                html += `<div style="background:#f8f9ff;border:2px solid #ddd;border-radius:10px;padding:15px;cursor:pointer;margin:10px 0;" 
+                    onclick="calculateObjective(${obj},${totalCC},${coefCC})"><strong>${mention}</strong> (${obj}/20)</div>`;
+            });
+            html += '<div id="objectiveResult"></div></div>';
+            document.getElementById('modeContent').innerHTML = html;
+        }
+
+        function calculateObjective(target, totalCC, coefCC) {
+            const noteNec = ((target*100)-totalCC)/60;
+            document.getElementById('objectiveResult').innerHTML = `
+                <div class="info-box success" style="margin-top:20px;">
+                    <p><strong>📊 Pour ${target}/20 :</strong> ${noteNec.toFixed(1)}/20 aux épreuves terminales</p>
+                </div>`;
+        }
+
+        function calculateFinalGrade(totalCC, coefCC) {
+            const totalET = simulatorValues.francaisEcrit*5 + simulatorValues.francaisOral*5 + simulatorValues.philosophie*8 +
+                           simulatorValues.specialite1*16 + simulatorValues.specialite2*16 + simulatorValues.grandOral*10;
+            const moyenne = (totalCC + totalET) / (coefCC + 60);
+            const percentage = (moyenne/20)*100;
+            let mention, mentionClass, status;
+            if (moyenne >= 18) { mention='Félicitations'; mentionClass='tb'; status='🎉 Admis avec félicitations !'; }
+            else if (moyenne >= 16) { mention='Très Bien'; mentionClass='tb'; status='🎉 Admis TB !'; }
+            else if (moyenne >= 14) { mention='Bien'; mentionClass='b'; status='👏 Admis Bien !'; }
+            else if (moyenne >= 12) { mention='Assez Bien'; mentionClass='ab'; status='✅ Admis AB !'; }
+            else if (moyenne >= 10) { mention='Sans mention'; status='✅ Admis'; }
+            else if (moyenne >= 8) { mention='Rattrapage'; status='⚠️ Rattrapage'; }
+            else { mention='Refusé'; status='❌ Non admis'; }
+            return {moyenne, percentage, mention, mentionClass, status};
+        }
+
+        function updateSimulator(key, value, totalCC, coefCC) {
+            simulatorValues[key] = parseFloat(value);
+            document.getElementById(`val_${key}`).textContent = parseFloat(value).toFixed(1);
+            const result = calculateFinalGrade(totalCC, coefCC);
+            document.getElementById('moyenneDisplay').textContent = result.moyenne.toFixed(2)+'/20';
+            document.getElementById('progressBar').style.width = result.percentage+'%';
+            document.getElementById('progressBar').textContent = result.percentage.toFixed(1)+'%';
+            document.getElementById('statusDisplay').textContent = result.status;
+            const badge = document.getElementById('mentionBadge');
+            if (badge) {
+                badge.textContent = result.mention;
+                badge.className = 'mention-badge ' + result.mentionClass;
+            }
+        }
+    </script>
+</body>
+</html>
